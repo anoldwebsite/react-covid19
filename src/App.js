@@ -1,24 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import styles from './App.styles.css';
+import { fetchCovidData } from './api/';
+import CovidCards from './components/cards/all-cards/Cards';
+
 
 function App() {
+  const [data, setData] = useState({});
+  const [country, setCountry] = useState('');
+
+  useEffect(() => {
+    getFromAPI();
+  }, []); //Empty array means only on mounting and unmounting of the component render or re-render and not on updates.
+
+  const getFromAPI = async (country) => {
+    if (country) {
+      setData(await fetchCovidData());
+      setCountry(country);
+    } else {
+      setData(await fetchCovidData(country));
+      setCountry('');
+    }
+  }
+
+  /*   handleChangeOfCountry = async (country) => {
+      getFromAPI(country);
+    } */
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.container}>
+      <CovidCards data={data} />
     </div>
   );
 }
