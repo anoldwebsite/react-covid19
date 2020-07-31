@@ -1,37 +1,38 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import CardComponent from "../card/Card";
-import styles from "./Cards.css";
+import CovidCard from "../card/Card";
+import styles from "./Cards.css"; //Lets's write the css first.
 
 const CovidCards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
-  if (!confirmed) return "Loading ...";
+  if (!confirmed) return "Loading...";
 
   return (
     <div className={styles.container}>
       <Grid container spacing={3} justify="center">
-        <CardComponent
+        <CovidCard
           className={styles.infected}
           cardTitle="Infected"
           value={confirmed.value}
           lastUpdate={lastUpdate}
-          cardSubtitle="Number of Active Cases Infected Now with Covid-19"
+          cardSubtitle="Number of Active Cases Infected with Covid-19"
         />
-        <CardComponent
+        <CovidCard
           className={styles.recovered}
           cardTitle="Recovered"
           value={recovered.value}
           lastUpdate={lastUpdate}
           cardSubtitle="Number of Recovered from Covid-19"
         />
-        <CardComponent
+        <CovidCard
           className={styles.deaths}
           cardTitle="Deaths"
           value={deaths.value}
           lastUpdate={lastUpdate}
-          cardSubtitle="Number of Deaths caused by Covid-19"
+          cardSubtitle="Number of Deaths Caused by Covid-19"
         />
       </Grid>
     </div>
   );
 };
+
 export default CovidCards;
