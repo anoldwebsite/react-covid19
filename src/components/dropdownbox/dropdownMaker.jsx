@@ -20,7 +20,6 @@ const useDropDown = (label, defaultState, options) => {
           onChange={e => setState(e.target.value)}
           disabled={!options.length}
         >
-          <option>Global</option>
           {options.map((item) => 
             <option key={item} value={item}>
               {item}

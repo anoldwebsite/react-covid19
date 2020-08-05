@@ -11,7 +11,9 @@ function App() {
     const [countryList, setCountryList] = useState([]);
     useEffect(() => {
         const fetchCountriesFromAPI = async () => {
-            setCountryList(await fetCountriesData());
+            const countries = await fetCountriesData();
+            countries.unshift('Global');
+            setCountryList(countries);
         };
         fetchCountriesFromAPI();
     }, []);
@@ -24,7 +26,7 @@ function App() {
             setData(await fetchCovidData(country));
         };
 
-        getFromAPI(country);
+        country=== 'Global' ? getFromAPI('') : getFromAPI(country);
     }, [country]);
 
     return (
