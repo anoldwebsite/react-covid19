@@ -1,30 +1,36 @@
 import styles from './App.styles.css';
 import React, { useState, useEffect } from 'react';
-import { fetchCovidData } from './api/';
+import { fetchCovidData, fetCountriesData } from './api/';
 import CovidCards from './components/cards/all-cards/Cards';
+import useDropDown from './components/dropdownbox/dropdownMaker';
 
 function App() {
     const [data, setData] = useState({});//Initialiaing with an empty object. This object will have data that we retrieve from the REST API
-    const [country, setCountry] = useState('');//Initialize with empty string
-
-    //Get covid-19 data from the API endpoint when this component is loading
+    
+    //Get a list of countries from the API
+    const [countryList, setCountryList] = useState([]);
     useEffect(() => {
-        getFromAPI();
-    });
+        const fetchCountriesFromAPI = async () => {
+            setCountryList(await fetCountriesData());
+        };
+        fetchCountriesFromAPI();
+    }, []);
 
-    const getFromAPI = async (country) => {
-        if (country) {
+    const [country, CountryDropDown] = useDropDown("Select a Country: ", "", countryList);
+
+    //Get covid-19 data from the API endpoint when this component is loading, unloading or when the country changes
+    useEffect(() => {
+        const getFromAPI = async (country) => {
             setData(await fetchCovidData(country));
-            setCountry(country);
-        } else {
-            setData(await fetchCovidData());
-            setCountry('');
-        }
-    }
+        };
+
+        getFromAPI(country);
+    }, [country]);
 
     return (
         <div className={styles.container}>
             <CovidCards data={data} />
+            <CountryDropDown />
         </div>
     );
 }
