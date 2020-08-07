@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import CovidCard from "../card/Card";
-import styles from "./Cards.css"; //Lets's write the css first.
+import styles from "./Cards.css";
 
 const CovidCards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
   if (!confirmed) return "Loading...";

@@ -41,10 +41,11 @@ export const fetchDailyCoviData = async () => {
          with a different name than the object property.
          Here we are using date and assigning resportDate to it.
         */
-        return data.map(({ confirmed, deaths, reportDate: date }) => (
+        return data.map(({ confirmed, recovered ,deaths, reportDate: date }) => (
             //returning the object below
             {
                 confirmed: confirmed.total,
+                recovered: recovered.total,
                 deaths: deaths.total,
                 date
             }
